@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/back"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/setDictionary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="Amader Dictionary"
+        android:textColor="#311B92"
+        android:textSize="18dp" />
+
+    <SearchView
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/search_color"
+        android:gravity="center"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search Word"
+        android:inputType="textPersonName"
+        android:textColor="#0000FF" >
+    </SearchView>
+
+    <ListView
+        android:id="@+id/dictionaryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background_round_corner_edittext" >
+
+        <requestFocus />
+    </ListView>
+
+</LinearLayout>
