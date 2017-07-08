@@ -36,9 +36,10 @@ public class DictionaryDBOpenHelper extends SQLiteOpenHelper {
         this.context = context;
 
         Log.e("In Constructor", "Contructor of DatabaseHelper");
-        // database path /data/data/pkg-name/databases/
         String packageName = context.getPackageName();
         DB_PATH = "/data/data/" + packageName + "/databases/";
+
+        Log.w("DB_PATH", "are" + DB_PATH);
         this.database = openDatabase();
     }
 
@@ -57,8 +58,7 @@ public class DictionaryDBOpenHelper extends SQLiteOpenHelper {
         String path = DB_PATH + DB_NAME;
         if (database == null) {
             createDatabase();
-            database = SQLiteDatabase.openDatabase(path, null,
-                    SQLiteDatabase.OPEN_READWRITE);
+            database = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
         }
         return database;
     }
@@ -67,8 +67,7 @@ public class DictionaryDBOpenHelper extends SQLiteOpenHelper {
         boolean dbExists = checkDB();
         if (!dbExists) {
             this.getReadableDatabase();
-            Log.e(getClass().getName(),
-                    "Database doesn't exist. Copying database from assets...");
+            Log.e(getClass().getName(), "Database doesn't exist. Copying database from assets...");
             copyDatabase();
         } else {
             Log.e(getClass().getName(), "Database already exists");
@@ -126,10 +125,8 @@ public class DictionaryDBOpenHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
             for (int i = 0; i < cursor.getCount(); i++) {
                 //
-                String english_word = cursor.getString(cursor
-                        .getColumnIndex(ENGLISH_WORD_FIELD));
-                String bangla_word = cursor.getString(cursor
-                        .getColumnIndex(BANGLA_WORD_FIELD));
+                String english_word = cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_FIELD));
+                String bangla_word = cursor.getString(cursor.getColumnIndex(BANGLA_WORD_FIELD));
 
                 Bean words = new Bean(english_word, bangla_word);
                 allwords.add(words);

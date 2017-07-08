@@ -169,8 +169,7 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
         }
 
         @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
+        protected void publishResults(CharSequence constraint, FilterResults results) {
             wordLists = (ArrayList<Bean>) results.values;
             notifyDataSetChanged();
         }
@@ -178,8 +177,7 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
     }
 
     public String getFonts() {
-        preferences = context.getSharedPreferences(myPreference,
-                Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         String tempFonts;
         String orginalFonts = "";
         tempFonts = preferences.getString("select_fonts", "");
