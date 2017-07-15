@@ -13,9 +13,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.AboutActivity"
-            android:label="@string/title_activity_about">
-        </activity>
-    </application>
+        <activity android:name=".activity.TextSpeelingActivity"></activity>
+</application>
 </manifest>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+
+    android:background="@drawable/background_round_corner_edittext">
+
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Text To Speech"
+        android:padding="15dip"
+        android:textColor="#311B92"
+        android:textSize="26dip"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
+    <EditText android:id="@+id/txtText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter some text to speak"
+        android:background="@drawable/search_color"
+        android:padding="20dp"
+        android:layout_marginTop="20dip"
+        android:layout_margin="10dip"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <Button android:id="@+id/btnSpeak"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Speak Out"
+            android:textAllCaps="false"
+            android:theme="@style/MyButton"
+            android:layout_margin="10dip"/>
+
+        <Button
+            android:id="@+id/btnExit"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:theme="@style/MyButton"
+            android:textAllCaps="false"
+            android:text="Cancel" />
+    </LinearLayout>
+
+
+</LinearLayout>

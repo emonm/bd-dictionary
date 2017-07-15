@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.at.bd_dictionary.model.Bean;
+
+import com.at.bd_dictionary.model.Dictionary;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -112,15 +113,11 @@ public class DictionaryDBOpenHelper extends SQLiteOpenHelper {
     }
 
     // query
-    public ArrayList<Bean> getAllwords() {
-        ArrayList<Bean> allwords = new ArrayList<Bean>();
-
-        // String[] columns={NAME_FIELD, EMAIL_FIELD, PHONE_FIELD};
-        // SELECT * FROM EMPLOYEE;
+    public ArrayList<Dictionary> getAllwords() {
+        ArrayList<Dictionary> allwords = new ArrayList<Dictionary>();
         Cursor cursor = this.database.query(DICTIONARY_TABLE, null, null, null,
                 null, null, null);
 
-        // Cursor cursor = db.rawQuery("SELECT * FROM EMPLOYEE", null);
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -128,7 +125,7 @@ public class DictionaryDBOpenHelper extends SQLiteOpenHelper {
                 String english_word = cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_FIELD));
                 String bangla_word = cursor.getString(cursor.getColumnIndex(BANGLA_WORD_FIELD));
 
-                Bean words = new Bean(english_word, bangla_word);
+                Dictionary words = new Dictionary(english_word, bangla_word);
                 allwords.add(words);
                 cursor.moveToNext();
             }

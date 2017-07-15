@@ -15,8 +15,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.at.bd_dictionary.model.Bean;
+
 import com.at.bd_dictionary.R;
+import com.at.bd_dictionary.model.Dictionary;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -32,11 +33,11 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
     private int MY_DATA_CHECK_CODE = 0;
 
     public TextToSpeech tts;
-    ArrayList<Bean> wordLists;
-    ArrayList<Bean> searchWorld;
+    ArrayList<Dictionary> wordLists;
+    ArrayList<Dictionary> searchWorld;
     WordFilter valueFilter;
 
-    public E2BListViewAdapter(Context context, ArrayList<Bean> words) {
+    public E2BListViewAdapter(Context context, ArrayList<Dictionary> words) {
         this.context = context;
         this.wordLists = words;
         this.searchWorld = words;
@@ -80,8 +81,6 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
             holder.eng_word = (TextView) convertView.findViewById(R.id.view_eng);
             holder.bang_word = (TextView) convertView.findViewById(R.id.view_bang);
             holder.imageButton = (ImageButton) convertView.findViewById(R.id.soundButton);
-            // String str = ((TextView) convertView.findViewById(R.id.txt_eng))
-            // .getText().toString();
             convertView.setTag(holder);
 
         } else {
@@ -90,7 +89,6 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
 
         holder.eng_word.setText(wordLists.get(position).getEngWord());
         holder.bang_word.setText(wordLists.get(position).getBangWord());
-         //This is how you will get the phone to  speak
         holder.bang_word.setTypeface(Typeface.createFromAsset(
                 context.getAssets(), E2BListViewAdapter.FONT));
 
@@ -115,14 +113,13 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
                 tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
                     @Override
                     public void onInit(int status) {
-                        //And edited Here
                         if (status == TextToSpeech.SUCCESS){
                             int result = tts.setLanguage(Locale.ENGLISH);
-                            Bean  word_eng = wordLists.get(position);
+                            Dictionary word_eng = wordLists.get(position);
                             result = tts.setLanguage(Locale.ENGLISH);
 
                             String toSpeak = word_eng.getEngWord();
-                            Toast.makeText(context, toSpeak, Toast.LENGTH_SHORT).show();
+                            Log.w("Dictinary Data:", toSpeak);
                             tts.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
                         }else{
                             Toast.makeText(context, "Not Supported in your Device", Toast.LENGTH_SHORT).show();
@@ -150,11 +147,11 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint != null && constraint.length() > 0) {
-                ArrayList<Bean> filterList = new ArrayList<Bean>();
+                ArrayList<Dictionary> filterList = new ArrayList<Dictionary>();
                 for (int i = 0; i < searchWorld.size(); i++) {
                     if ((searchWorld.get(i).getEngWord().toLowerCase())
                             .contains(constraint.toString().toLowerCase())) {
-                        Bean words = new Bean(searchWorld.get(i).getEngWord(),
+                        Dictionary words = new Dictionary(searchWorld.get(i).getEngWord(),
                                 searchWorld.get(i).getBangWord());
                         filterList.add(words);
                     }
@@ -170,7 +167,7 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            wordLists = (ArrayList<Bean>) results.values;
+            wordLists = (ArrayList<Dictionary>) results.values;
             notifyDataSetChanged();
         }
 
@@ -183,7 +180,7 @@ public class E2BListViewAdapter extends BaseAdapter implements Filterable{
         tempFonts = preferences.getString("select_fonts", "");
         if (tempFonts != null && !tempFonts.equals(""))
             orginalFonts = tempFonts;
-        Log.d("Disctionary", orginalFonts);
+        Log.d("Disctionary adapter......... ", orginalFonts);
         return orginalFonts;
     }
 }

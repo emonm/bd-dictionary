@@ -1,23 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/about_page"
+        android:id="@+id/speeling"
         android:icon="@drawable/ic_launcher"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="About Page"/>
+        android:title="Text Speeling"/>
     <item
         android:id="@+id/action_font"
         android:icon="@drawable/ic_launcher"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="Font"/>
-    <item
-        android:id="@+id/action_bookmarks"
-        android:icon="@drawable/ic_launcher"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="BookMarks"/>
     <item
         android:id="@+id/action_exit"
         android:icon="@drawable/ic_launcher"

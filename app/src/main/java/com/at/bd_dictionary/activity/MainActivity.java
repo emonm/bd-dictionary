@@ -24,35 +24,25 @@ import android.widget.TextView;
 import com.at.bd_dictionary.R;
 import com.at.bd_dictionary.adapter.E2BListViewAdapter;
 import com.at.bd_dictionary.db.DictionaryDBOpenHelper;
-import com.at.bd_dictionary.model.Bean;
+import com.at.bd_dictionary.model.Dictionary;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends Activity implements OnQueryTextListener {
-    DictionaryDBOpenHelper dbHelper;
+    DictionaryDBOpenHelper dbHelper;;
     public static final String FONT = "SolaimanLipi.ttf";
     SharedPreferences preferences;
     private static final String myPreference = "Mypreference";
-
-    // declare to change selector
     private boolean isSelect = false;
     private boolean isChackBookmarks = false;
     private boolean status = false;
-    private boolean check = true;
-    // set dictionary type
-    String e2bString = "Amader Dictionary";
-
-    TextView etDictonary;
     SearchView textSearch;
     ListView lv;
-
-    // initialize adapter
     final String[] fontsSize = {"Small", "Medium", "Large", "Extra Large"};
     ArrayAdapter<String> adapter;
     AlertDialog a;
-
-    ArrayList<Bean> wordList;
+    ArrayList<Dictionary> wordList;
     E2BListViewAdapter listAdapter;
 
     @Override
@@ -60,25 +50,13 @@ public class MainActivity extends Activity implements OnQueryTextListener {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
-
-
-
         textSearch = (SearchView) findViewById(R.id.etSearch);
-        etDictonary = (TextView) findViewById(R.id.setDictionary);
         lv = (ListView) findViewById(R.id.dictionaryList);
         createFontAlert();
         dbHelper = DictionaryDBOpenHelper.getInstance(getApplicationContext());
-
-        // get all word form database
         wordList = dbHelper.getAllwords();
 
-        // get present status
-
-        if (check) {
-            loadE2BListView();
-        } else {
-//            loadE2BNormalView();
-        }
+        loadE2BListView();
 
         lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -87,21 +65,19 @@ public class MainActivity extends Activity implements OnQueryTextListener {
                                            int position, long id) {
                 String word_eng = wordList.get(position).getEngWord();
                 String word_bang = wordList.get(position).getBangWord();
-                Bean b = new Bean(word_eng, word_bang);
+                Dictionary b = new Dictionary(word_eng, word_bang);
                 openAlert();
+                if (isChackBookmarks) {
 
+                }
                 return true;
             }
         });
-
-        // set status
 
         setStatus();
 
         textSearch.setOnQueryTextListener(this);
     }
-
-    // set alert bookmarks
 
     public void openAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -143,17 +119,13 @@ public class MainActivity extends Activity implements OnQueryTextListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-//            case R.id.action_fullView:
-//                loadE2BListView();
-//                return true;
-            case R.id.about_page:
-                Intent intent2 = new Intent(MainActivity.this,
-                        AboutActivity.class);
-                Bundle banAnimation1 = ActivityOptions.makeCustomAnimation(
+            case R.id.speeling:
+                Intent intent3 = new Intent(MainActivity.this,
+                        TextSpeelingActivity.class);
+                Bundle banAnimation2 = ActivityOptions.makeCustomAnimation(
                         getApplicationContext(), R.anim.animation_next,
                         R.anim.animaton_pre).toBundle();
-                startActivity(intent2, banAnimation1);
-
+                startActivity(intent3, banAnimation2);
                 return true;
             case R.id.action_font:
                 a.show();
@@ -162,8 +134,6 @@ public class MainActivity extends Activity implements OnQueryTextListener {
             case R.id.action_exit:
                 finish();
                 break;
-            case R.id.action_bookmarks:
-
 
         }
         return true;
@@ -172,15 +142,12 @@ public class MainActivity extends Activity implements OnQueryTextListener {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-//        menu.findItem(R.id.action_fullView).setVisible(!isSelect);
-//        menu.findItem(R.id.action_Normal).setVisible(isSelect);
         return true;
     }
 
     public void loadE2BListView() {
         status = true;
         isSelect = true;
-        etDictonary.setText(e2bString);
         listAdapter = new E2BListViewAdapter(getApplicationContext(), wordList);
         lv.setAdapter(listAdapter);
 
@@ -191,8 +158,6 @@ public class MainActivity extends Activity implements OnQueryTextListener {
         if (isSelect) {
             listAdapter.getFilter().filter(newText);
 
-        } else {
-//            normalAdapter.getFilter().filter(newText);
         }
         return false;
     }
@@ -236,11 +201,6 @@ public class MainActivity extends Activity implements OnQueryTextListener {
         editor.commit();
     }
 
-    public void getStatus() {
-        preferences = getSharedPreferences(myPreference, MODE_PRIVATE);
-        check = preferences.getBoolean("status", false);
-
-    }
 
 
 }
